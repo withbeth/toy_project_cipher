@@ -15,15 +15,12 @@
 # 2 <= k <= half the msg size
 from typing import List
 
-
-def gen_msg_chunks(k: int, message: str):
-    for start_idx in range(0, len(message), k):
-        yield message[start_idx:start_idx + k]
+from shared import pretty_print, transpose, gen_msg_chunks
 
 
-def msg2array(k: int, message: str) -> List[List[str]]:
+def msg2array(delimiter: int, message: str) -> List[List[str]]:
     boxes = []
-    for msg_chunk in gen_msg_chunks(k, message):
+    for msg_chunk in gen_msg_chunks(delimiter, message):
         box = []
         for ch in msg_chunk:
             box.append(ch)
@@ -31,31 +28,19 @@ def msg2array(k: int, message: str) -> List[List[str]]:
     return boxes
 
 
-def transpose(array: List[List[str]], k: int) -> List[List[str]]:
-    transposed = []
-    for i in range(0, k):
-        col = []
-        for j in range(0, len(array)):
-            try:
-                col.append(array[j][i])
-            except IndexError:
-                pass
-        transposed.append(col)
-    return transposed
-
-
-def pretty_print(array):
-    for row in array:
-        print(row, flush=True)
-    print()
-
-
-def encrypt(k: int, message: str) -> str:
+def encrypt(secret_key: int, plain_text: str) -> str:
     encrypted = ''
-    for row in transpose(msg2array(k, message), k):
-        encrypted = encrypted + ''.join(row)
-    return encrypted
 
+    boxes = msg2array(secret_key, plain_text)
+    pretty_print(boxes)
+    transposed = transpose(boxes, secret_key)
+    pretty_print(transposed)
+
+    for row in transposed:
+        encrypted = encrypted + ''.join(row)
+
+    print(encrypted)
+    return encrypted
 
 
 
