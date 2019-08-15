@@ -13,4 +13,4 @@ def reverse_str(msg=''):
     return cipher
 
 
-print(reverse_str(input("Enter message you wanna encrypt: ")))
+print(reverse_str(input("Enter message you wanna transpose: ")))

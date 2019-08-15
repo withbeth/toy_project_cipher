@@ -1,6 +1,6 @@
 # CAESAR CIPHER
 # This cipher uses keys,
-# which encrypt the msg differently depending on which key is used.
+# which transpose the msg differently depending on which key is used.
 # Key ranges for the cipher : [0..25]
 # You must know the key if you want break?!
 
